@@ -1,5 +1,5 @@
 # 7. Kết quả và phân tích
-<!-- P4 chủ trì, P2 viết 7.3 -->
+<!-- P4 viết -->
 Quy ước: tách rõ **Quan sát** (số liệu) – **Nhận định** (suy ra) – **Giới hạn**.
 ## 7.1 Ảnh hưởng của dung lượng buffer
 ## 7.2 Ảnh hưởng của RTT

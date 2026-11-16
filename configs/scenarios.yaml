@@ -1,4 +1,4 @@
-# Kịch bản thí nghiệm (P4 chủ trì). Mỗi kịch bản: ghi đè base.yaml + (tùy chọn) 1 tham số quét.
+# Kịch bản thí nghiệm (P3 chạy; P1 phụ trách sweep_rtt/sweep_loss, P2 phụ trách S1–S3, sweep_buffer/sweep_app_rate). Mỗi kịch bản: ghi đè base.yaml + (tùy chọn) 1 tham số quét.
 # Lý thuyết tham chiếu khi không mất gói: goodput ≈ min(buffer_size / RTT, app_read_rate)
 seeds: [1, 2, 3, 4, 5]
 

@@ -1,4 +1,4 @@
-"""Vẽ biểu đồ từ results/. Chủ sở hữu: P4.
+"""Vẽ biểu đồ từ results/. Chủ sở hữu: P3.
 
 Biểu đồ tối thiểu cần có (mỗi hình: tiêu đề, nhãn trục có ĐƠN VỊ, chú giải, error bar = std qua 5 seed):
  1. Goodput (Mbit/s) theo buffer_size (KB) – S1 vs S3, kèm đường lý thuyết min(B/RTT, R_app)
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> None:
-    # TODO(P4)
+    # TODO(P3)
     raise NotImplementedError
 
 

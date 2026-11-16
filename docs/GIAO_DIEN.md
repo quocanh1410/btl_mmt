@@ -45,8 +45,8 @@ receiver.rwnd -> int
 receiver.delivered_bytes -> int     # byte ứng dụng đã đọc
 ```
 
-## Metrics (P4)
-Các module **chỉ gọi** các hàm ghi; P4 tự tính chỉ tiêu.
+## Metrics (P2)
+Các module **chỉ gọi** các hàm ghi; P2 tính chỉ tiêu trong metrics.py.
 ```python
 metrics.on_send(t, segment)
 metrics.on_ack_received(t, ack, in_flight)

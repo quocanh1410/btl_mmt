@@ -1,4 +1,4 @@
-# Môi trường chạy thí nghiệm (P4 điền khi chạy bản cuối)
+# Môi trường chạy thí nghiệm (P3 điền khi chạy bản cuối)
 
 - Hệ điều hành:
 - CPU / RAM:

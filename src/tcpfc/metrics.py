@@ -1,4 +1,4 @@
-"""Ghi log và tính chỉ tiêu. Chủ sở hữu: P4.
+"""Ghi log và tính chỉ tiêu. Chủ sở hữu: P2.
 
 Định nghĩa chỉ tiêu (đưa vào báo cáo, mục Thiết kế thí nghiệm):
 - goodput (byte/s)          = total_bytes ứng dụng nhận / completion_time
@@ -32,19 +32,19 @@ class Metrics:
 
     # ----------------------------------------------------- hàm ghi (module khác gọi)
     def on_send(self, t: float, seg: Segment, in_flight: int | None = None) -> None:
-        # TODO(P4): cộng bytes_sent / retx_bytes; ghi ts_in_flight nếu có in_flight
+        # TODO(P2): cộng bytes_sent / retx_bytes; ghi ts_in_flight nếu có in_flight
         raise NotImplementedError
 
     def on_ack_received(self, t: float, ack: Ack, in_flight: int) -> None:
-        # TODO(P4)
+        # TODO(P2)
         raise NotImplementedError
 
     def on_buffer_change(self, t: float, buffered_bytes: int, rwnd: int) -> None:
-        # TODO(P4)
+        # TODO(P2)
         raise NotImplementedError
 
     def on_app_read(self, t: float, nbytes: int) -> None:
-        # TODO(P4): cập nhật ts_delivered; khi đủ total_bytes -> completion_time = t
+        # TODO(P2): cập nhật ts_delivered; khi đủ total_bytes -> completion_time = t
         raise NotImplementedError
 
     def on_event(self, t: float, name: str) -> None:
@@ -53,11 +53,11 @@ class Metrics:
     # ----------------------------------------------------- tính chỉ tiêu
     @staticmethod
     def time_weighted_mean(series: list[tuple[float, int]], t_end: float) -> float:
-        # TODO(P4): sum(value_i * (t_{i+1} - t_i)) / t_end  (hàm bậc thang)
+        # TODO(P2): sum(value_i * (t_{i+1} - t_i)) / t_end  (hàm bậc thang)
         raise NotImplementedError
 
     def summary(self) -> dict:
-        # TODO(P4): trả dict các chỉ tiêu ở docstring đầu file
+        # TODO(P2): trả dict các chỉ tiêu ở docstring đầu file
         raise NotImplementedError
 
     def timeseries(self) -> dict[str, list[tuple[float, int]]]:

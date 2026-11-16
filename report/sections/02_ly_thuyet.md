@@ -1,5 +1,5 @@
 # 2. Cơ sở lý thuyết
-<!-- P1 -->
+<!-- P4 viết -->
 ## 2.1 Sequence number và ACK tích lũy
 ## 2.2 Sliding window bên gửi
 ## 2.3 Receive buffer và advertised window (rwnd)

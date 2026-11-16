@@ -10,10 +10,10 @@ sequence/ACK tích lũy, bộ đệm nhận, **advertised window (rwnd)**, hành
 
 | Mã | Thành viên | Vai trò chính | Thư mục / file sở hữu |
 |----|-----------|---------------|------------------------|
-| P1 | _(điền tên – MSSV)_ | Trưởng nhóm, **Bên gửi** + tích hợp | `src/tcpfc/sender.py`, `src/tcpfc/simulation.py` |
-| P2 | _(điền tên – MSSV)_ | **Bên nhận**, bộ đệm, rwnd, ứng dụng đọc | `src/tcpfc/receiver.py` |
-| P3 | _(điền tên – MSSV)_ | **Kênh truyền**, engine sự kiện, kiểm chứng TCP thật (Wireshark) | `src/tcpfc/engine.py`, `src/tcpfc/channel.py`, `demo/` |
-| P4 | _(điền tên – MSSV)_ | **Thí nghiệm, chỉ tiêu, biểu đồ**, tổng hợp báo cáo | `src/tcpfc/metrics.py`, `scripts/`, `configs/`, `plots/` |
+| P1 | _(điền tên – MSSV)_ | Code: **Bên gửi** + tích hợp; thí nghiệm RTT, mất gói | `src/tcpfc/sender.py`, `src/tcpfc/simulation.py` |
+| P2 | _(điền tên – MSSV)_ | Code: **Bên nhận**, rwnd, **chỉ tiêu đo**; thí nghiệm buffer, tốc độ đọc | `src/tcpfc/receiver.py`, `src/tcpfc/metrics.py` |
+| P3 | _(điền tên – MSSV)_ | Code: **Kênh**, engine, **chạy thí nghiệm & vẽ biểu đồ**, demo TCP thật | `engine.py`, `channel.py`, `scripts/`, `configs/`, `demo/` |
+| P4 | _(điền tên – MSSV)_ | **Báo cáo, slide, hồ sơ nộp** (không code) | `report/`, `docs/` |
 
 ## Cấu trúc thư mục
 
@@ -25,16 +25,16 @@ sequence/ACK tích lũy, bộ đệm nhận, **advertised window (rwnd)**, hành
 │   ├── segment.py      # cấu trúc Segment / Ack dùng chung (cả nhóm – sửa phải qua PR)
 │   ├── sender.py       # bên gửi: sliding window, RTO, persist timer (P1)
 │   ├── receiver.py     # bên nhận: buffer, rwnd, app read (P2)
-│   ├── metrics.py      # ghi log & tính chỉ tiêu (P4)
+│   ├── metrics.py      # ghi log & tính chỉ tiêu (P2)
 │   └── simulation.py   # ghép các khối, chạy 1 lần mô phỏng (P1)
-├── configs/            # kịch bản YAML (P4)
-├── scripts/            # chạy hàng loạt, vẽ biểu đồ (P4)
+├── configs/            # kịch bản YAML (P3)
+├── scripts/            # chạy hàng loạt, vẽ biểu đồ (P3)
 ├── tests/              # kiểm thử pytest (mỗi người viết test cho module của mình)
 ├── results/raw/        # CSV/JSON kết quả thô (sinh tự động, có commit bản cuối)
 ├── plots/              # biểu đồ PNG/PDF (sinh tự động)
-├── report/             # báo cáo: mỗi người 1 file section, P4 ghép
+├── report/             # báo cáo (P4 viết)
 ├── demo/               # video, pcap, ảnh chụp minh chứng (P3)
-└── docs/               # phân công, giao diện module, quy trình git, nhật ký
+└── docs/               # phân công, giao diện module, quy trình git, nhật ký, ghi chú kỹ thuật (ghi_chu/)
 ```
 
 ## Cài đặt

@@ -1,5 +1,5 @@
 # 4. Mô hình bên gửi
-<!-- P1 -->
+<!-- P4 viết -->
 ## 4.1 Biến trạng thái và điều kiện gửi
 ## 4.2 Xử lý ACK
 ## 4.3 Truyền lại khi timeout
