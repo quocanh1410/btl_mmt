@@ -4,8 +4,7 @@ Mô phỏng sự kiện rời rạc (discrete-event) bên gửi / bên nhận TC
 sequence/ACK tích lũy, bộ đệm nhận, **advertised window (rwnd)**, hành vi khi bộ đệm đầy
 (zero window + persist/probe). Mục tiêu chính: minh họa và đo **phía nhận trở thành nút cổ chai**.
 
-> ⚠️ Đề này là **flow control**, KHÔNG phải congestion control. Mô hình không có `cwnd`,
-> slow start, fast retransmit… Cửa sổ gửi chỉ bị giới hạn bởi `rwnd` (và tùy chọn một hằng số `max_wnd`).
+
 
 ## Thành viên & phân công (tóm tắt — chi tiết ở [docs/PHAN_CONG.md](docs/PHAN_CONG.md))
 
