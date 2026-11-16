@@ -1,0 +1,30 @@
+# Kịch bản thí nghiệm (P4 chủ trì). Mỗi kịch bản: ghi đè base.yaml + (tùy chọn) 1 tham số quét.
+# Lý thuyết tham chiếu khi không mất gói: goodput ≈ min(buffer_size / RTT, app_read_rate)
+seeds: [1, 2, 3, 4, 5]
+
+scenarios:
+  # --- 3 mức tải phía nhận ---
+  S1_nhe:                    # ứng dụng đọc nhanh -> nút cổ chai là cửa sổ (buffer/RTT)
+    app_read_rate: 1.0e7
+  S2_trung_binh:             # tốc độ đọc ~ buffer/RTT
+    app_read_rate: 6.5e5
+  S3_nang:                   # ứng dụng đọc chậm -> buffer đầy, zero window, receiver là nút cổ chai
+    app_read_rate: 1.0e5
+
+  # --- Quét tham số (mỗi tham số chạy cho cả S1 và S3 để so sánh) ---
+  sweep_buffer:
+    base_on: [S1_nhe, S3_nang]
+    param: buffer_size
+    values: [8192, 16384, 32768, 65535, 131072, 262144]
+  sweep_rtt:
+    base_on: [S1_nhe, S3_nang]
+    param: rtt
+    values: [0.01, 0.05, 0.1, 0.2, 0.4]
+  sweep_app_rate:
+    base_on: [S1_nhe]
+    param: app_read_rate
+    values: [5.0e4, 1.0e5, 2.5e5, 5.0e5, 1.0e6, 2.0e6, 5.0e6]
+  sweep_loss:
+    base_on: [S1_nhe, S3_nang]
+    param: loss_rate
+    values: [0.0, 0.005, 0.01, 0.02, 0.05]

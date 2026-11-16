@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.DS_Store
+*.zip
+demo/*.mp4
+demo/*.mov
+results/raw/_scratch/
+report/*.aux
+report/*.log

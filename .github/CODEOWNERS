@@ -1,0 +1,17 @@
+# Thay @username bằng tài khoản GitHub thật của từng người (không có dấu <>)
+# P1
+/src/tcpfc/sender.py      @P1_USERNAME
+/src/tcpfc/simulation.py  @P1_USERNAME
+# P2
+/src/tcpfc/receiver.py    @P2_USERNAME
+# P3
+/src/tcpfc/engine.py      @P3_USERNAME
+/src/tcpfc/channel.py     @P3_USERNAME
+/demo/                    @P3_USERNAME
+# P4
+/src/tcpfc/metrics.py     @P4_USERNAME
+/scripts/                 @P4_USERNAME
+/configs/                 @P4_USERNAME
+# Giao diện chung – cần cả nhóm
+/src/tcpfc/segment.py     @P1_USERNAME @P2_USERNAME @P3_USERNAME @P4_USERNAME
+/docs/GIAO_DIEN.md        @P1_USERNAME @P2_USERNAME @P3_USERNAME @P4_USERNAME
