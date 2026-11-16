@@ -35,5 +35,4 @@ pytest
 - Xung đột (conflict): `git pull origin main` vào nhánh của mình, sửa, test lại, push.
 
 ## Commit history = minh chứng đóng góp
-Giảng viên có thể điều chỉnh điểm cá nhân theo bằng chứng đóng góp. Mỗi người tự commit bằng tài khoản của mình
-(cấu hình `git config user.name` / `user.email` đúng), không nhờ người khác commit hộ.
+
