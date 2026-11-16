@@ -10,10 +10,10 @@ sequence/ACK tích lũy, bộ đệm nhận, **advertised window (rwnd)**, hành
 
 | Mã | Thành viên | Vai trò chính | Thư mục / file sở hữu |
 |----|-----------|---------------|------------------------|
-| P1 | _(điền tên – MSSV)_ | Code: **Bên gửi** + tích hợp; thí nghiệm RTT, mất gói | `src/tcpfc/sender.py`, `src/tcpfc/simulation.py` |
-| P2 | _(điền tên – MSSV)_ | Code: **Bên nhận**, rwnd, **chỉ tiêu đo**; thí nghiệm buffer, tốc độ đọc | `src/tcpfc/receiver.py`, `src/tcpfc/metrics.py` |
-| P3 | _(điền tên – MSSV)_ | Code: **Kênh**, engine, **chạy thí nghiệm & vẽ biểu đồ**, demo TCP thật | `engine.py`, `channel.py`, `scripts/`, `configs/`, `demo/` |
-| P4 | _(điền tên – MSSV)_ | **Báo cáo, slide, hồ sơ nộp** (không code) | `report/`, `docs/` |
+| P1 | Quốc Anh | Code: **Bên gửi** + tích hợp; thí nghiệm RTT, mất gói | `src/tcpfc/sender.py`, `src/tcpfc/simulation.py` |
+| P2 | Quân | Code: **Bên nhận**, rwnd, **chỉ tiêu đo**; thí nghiệm buffer, tốc độ đọc | `src/tcpfc/receiver.py`, `src/tcpfc/metrics.py` |
+| P3 | Đức | Code: **Kênh**, engine, **chạy thí nghiệm & vẽ biểu đồ**, demo TCP thật | `engine.py`, `channel.py`, `scripts/`, `configs/`, `demo/` |
+| P4 | Tiến | **Báo cáo, slide** | `report/`, `docs/` |
 
 ## Cấu trúc thư mục
 
