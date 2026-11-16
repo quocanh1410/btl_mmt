@@ -11,7 +11,7 @@ Mỗi người code sở hữu một khối code + một nhóm thí nghiệm, v�
 
 ---
 
-## P1 – Trưởng nhóm kỹ thuật · Bên gửi · Tích hợp
+## P1 – Bên gửi · Tích hợp
 
 **Code**
 - `src/tcpfc/sender.py`
@@ -69,8 +69,8 @@ Mỗi người code sở hữu một khối code + một nhóm thí nghiệm, v�
 
 - Viết **toàn bộ báo cáo** `report/sections/*.md` (15–25 trang) dựa trên ghi chú kỹ thuật, biểu đồ và CSV của P1–P3:
   - Tự nghiên cứu & viết ngay từ tuần 1: mục 1 (mục tiêu), 2 (lý thuyết: sliding window, rwnd, zero window, persist timer, SWS, flow vs congestion control), 10 (tài liệu tham khảo – RFC 9293, 6298, 1122).
-  - Từ tuần 3: mục 3–6 theo ghi chú kỹ thuật.
-  - Từ tuần 4: mục 7–9 (phân tích: tách rõ Quan sát – Nhận định – Giới hạn; mọi hình ghi tham số, số seed, đơn vị).
+  - Từ GĐ 3: mục 3–6 theo ghi chú kỹ thuật.
+  - Từ GĐ 4: mục 7–9 (phân tích: tách rõ Quan sát – Nhận định – Giới hạn; mọi hình ghi tham số, số seed, đơn vị).
 - Vẽ **sơ đồ khối, sơ đồ trình tự** (sequence diagram) gửi/nhận/zero window cho báo cáo và slide.
 - Ghép báo cáo → PDF; làm **slide bảo vệ** (mỗi người code góp 2–4 slide nội dung phần mình, P4 thống nhất hình thức).
 - Hồ sơ: đề xuất gửi giảng viên (Bước 1), `docs/NHAT_KY_DONG_GOP.md` (nhắc mọi người ghi hàng tuần), `docs/KHAI_BAO_AI.md`, rà checklist mục VII của đề, biên bản họp.
@@ -89,11 +89,11 @@ P4 hỏi lại trực tiếp trong issue/PR khi ghi chú chưa rõ; người cod
 
 ## Mốc thời gian (điều chỉnh theo hạn nộp thực tế)
 
-| Tuần | P1–P3 (code & thử nghiệm) | P4 (báo cáo) |
+| Giai đoạn | P1–P3 (code & thử nghiệm) | P4 (báo cáo) |
 |---|---|---|
-| T1 | Chốt `GIAO_DIEN.md` | Gửi đề xuất + phân công cho GV; khung báo cáo |
-| T2 | Mỗi module qua test đơn vị; ghép end-to-end không mất gói | Viết mục 1, 2, 10 |
-| T3 | Đủ chức năng (mất gói, zero window, window update); demo TCP thật lần 1; ghi chú kỹ thuật bản 1 | Viết mục 3, 4, 5, 6; sơ đồ |
-| T4 | Chạy đủ kịch bản × 5 seed, CSV + biểu đồ | Viết mục 7, 8 |
-| T5 | Sửa lỗi, video demo, góp slide | Mục 9, ghép PDF, slide |
-| T6 | Chạy lại trên máy sạch | Rà checklist, nén & nộp |
+| GĐ1 | Chốt `GIAO_DIEN.md` | Gửi đề xuất + phân công cho GV; khung báo cáo |
+| GĐ2 | Mỗi module qua test đơn vị; ghép end-to-end không mất gói | Viết mục 1, 2, 10 |
+| GĐ3 | Đủ chức năng (mất gói, zero window, window update); demo TCP thật lần 1; ghi chú kỹ thuật bản 1 | Viết mục 3, 4, 5, 6; sơ đồ |
+| GĐ4 | Chạy đủ kịch bản × 5 seed, CSV + biểu đồ | Viết mục 7, 8 |
+| GĐ5 | Sửa lỗi, video demo, góp slide | Mục 9, ghép PDF, slide |
+| GĐ6 | Chạy lại trên máy sạch | Rà checklist, nén & nộp |
