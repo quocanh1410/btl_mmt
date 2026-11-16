@@ -3,12 +3,12 @@
 # Yêu cầu: GitHub CLI đã đăng nhập (gh auth login), chạy trong thư mục repo.
 # Dùng: bash scripts/setup_github.sh
 set -euo pipefail
-REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+URL=$(git remote get-url origin); URL=${URL%.git}; REPO=${REPO:-${URL#*github.com/}}
 echo "Repo: $REPO"
 
-for p in P1 P2 P3 P4; do gh label create "$p" --color 1d76db --force >/dev/null; done
-gh label create task   --color 0e8a16 --force >/dev/null
-gh label create report --color fbca04 --force >/dev/null
+label(){ gh api "repos/$REPO/labels" -f name="$1" -f color="$2" >/dev/null 2>&1 || true; }
+for p in P1 P2 P3 P4; do label "$p" 1d76db; done
+label task 0e8a16; label report fbca04
 
 declare -a MS=("T1 - De xuat & giao dien" "T2 - Ban chay toi thieu" "T3 - Du chuc nang"
                "T4 - Thi nghiem" "T5 - Phan tich & bao cao" "T6 - Hoan thien & nop")
@@ -16,8 +16,10 @@ for m in "${MS[@]}"; do
   gh api "repos/$REPO/milestones" -f title="$m" >/dev/null 2>&1 || true
 done
 
-issue(){ # $1=label $2=milestone $3=title $4=body
-  gh issue create --title "$3" --body "$4" --label "$1,task" --milestone "$2" >/dev/null && echo "  + $3"; }
+ms_num(){ gh api "repos/$REPO/milestones?state=all&per_page=100" --jq ".[] | select(.title==\"$1\") | .number"; }
+issue(){ # $1=label $2=milestone $3=title $4=body   (dùng REST API)
+  local n; n=$(ms_num "$2")
+  gh api "repos/$REPO/issues" -f title="$3" -f body="$4" -f "labels[]=$1" -f "labels[]=task" -F milestone="$n" >/dev/null && echo "  + $3"; }
 
 M1="${MS[0]}"; M2="${MS[1]}"; M3="${MS[2]}"; M4="${MS[3]}"; M5="${MS[4]}"; M6="${MS[5]}"
 
