@@ -22,7 +22,7 @@ sim.run(until: float | None = None)
 
 ## Channel (P3)
 ```python
-Channel(sim, rtt, loss_rate, rng, loss_on_ack=True, jitter=0.0)
+Channel(sim, rtt, loss_rate, rng, loss_on_ack=True, jitter=0.0, metrics=None, bandwidth=None)
 channel.send_to_receiver(segment)   # sau RTT/2 gọi receiver.on_segment(segment) nếu không mất
 channel.send_to_sender(ack)         # sau RTT/2 gọi sender.on_ack(ack) nếu không mất
 channel.connect(sender, receiver)
@@ -30,7 +30,8 @@ channel.connect(sender, receiver)
 
 ## Sender (P1)
 ```python
-Sender(sim, channel, metrics, total_bytes, mss, rto, init_rwnd, max_wnd=None)
+Sender(sim, channel, metrics, total_bytes, mss, rto, init_rwnd, max_wnd=None,
+       persist_init=None, persist_max=60.0, rto_backoff=True)
 sender.start()
 sender.on_ack(ack)
 sender.done -> bool                 # True khi snd_una == total_bytes
@@ -38,10 +39,12 @@ sender.done -> bool                 # True khi snd_una == total_bytes
 
 ## Receiver (P2)
 ```python
-Receiver(sim, channel, metrics, buffer_size, app_read_rate, app_read_interval, total_bytes)
+Receiver(sim, channel, metrics, buffer_size, app_read_rate, app_read_interval, total_bytes, mss,
+         store_out_of_order=True, sws_avoid=True, app_pause_at=None, app_pause_duration=0.0)
 receiver.start()                    # bắt đầu sự kiện ứng dụng đọc định kỳ
 receiver.on_segment(segment)
-receiver.rwnd -> int
+receiver.rwnd -> int                # cửa sổ quảng bá (0 nếu chỗ trống < min(MSS, B/2))
+receiver.free_space -> int          # chỗ trống thực trong bộ đệm
 receiver.delivered_bytes -> int     # byte ứng dụng đã đọc
 ```
 
@@ -50,6 +53,7 @@ Các module **chỉ gọi** các hàm ghi; P2 tính chỉ tiêu trong metrics.py
 ```python
 metrics.on_send(t, segment)
 metrics.on_ack_received(t, ack, in_flight)
+metrics.on_in_flight(t, in_flight)  # khi in-flight đổi không do gửi/ACK (Go-Back-N)
 metrics.on_buffer_change(t, buffered_bytes, rwnd)
 metrics.on_app_read(t, nbytes)
 metrics.on_event(t, name)           # "zero_window", "probe", "timeout", "window_update"...
@@ -59,5 +63,5 @@ metrics.timeseries() -> dict[str, list]
 
 ## Simulation (P1)
 ```python
-run(config: dict, seed: int) -> dict   # trả về metrics.summary() + tham số đầu vào
+run(config: dict, seed: int) -> dict   # metrics.summary() + tham số đầu vào + giới hạn lý thuyết
 ```

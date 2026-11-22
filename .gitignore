@@ -10,3 +10,5 @@ demo/*.mov
 results/raw/_scratch/
 report/*.aux
 report/*.log
+plots/run_once.png
+server_log.csv

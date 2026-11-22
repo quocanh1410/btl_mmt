@@ -25,7 +25,6 @@ def make(rwnd=4380, total=100_000, mss=1460):
     return sim, ch, s
 
 
-@pytest.mark.todo
 def test_never_exceeds_rwnd():
     sim, ch, s = make(rwnd=4380)
     s.start()
@@ -33,7 +32,6 @@ def test_never_exceeds_rwnd():
     assert len(ch.sent) == 3
 
 
-@pytest.mark.todo
 def test_ack_slides_window():
     sim, ch, s = make(rwnd=4380)
     s.start()
@@ -41,7 +39,6 @@ def test_ack_slides_window():
     assert s.snd_una == 1460 and s.in_flight <= 4380 and len(ch.sent) == 4
 
 
-@pytest.mark.todo
 def test_zero_window_stops_and_probes():
     sim, ch, s = make(rwnd=4380)
     s.start()
@@ -53,7 +50,6 @@ def test_zero_window_stops_and_probes():
     assert all(x.is_probe or x.is_retx for x in ch.sent[n:])
 
 
-@pytest.mark.todo
 def test_timeout_retransmits_from_snd_una():
     sim, ch, s = make(rwnd=4380)
     s.start()

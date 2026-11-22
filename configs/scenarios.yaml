@@ -1,30 +1,39 @@
-# Kịch bản thí nghiệm (P3 chạy; P1 phụ trách sweep_rtt/sweep_loss, P2 phụ trách S1–S3, sweep_buffer/sweep_app_rate). Mỗi kịch bản: ghi đè base.yaml + (tùy chọn) 1 tham số quét.
-# Lý thuyết tham chiếu khi không mất gói: goodput ≈ min(buffer_size / RTT, app_read_rate)
+# Kịch bản thí nghiệm. Mỗi kịch bản = base.yaml ghi đè bởi các khóa bên dưới.
+# Sweep = chạy một kịch bản gốc với từng giá trị của một tham số.
+# Lý thuyết tham chiếu khi không mất gói: goodput ≤ min(floor(B/MSS)·MSS / RTT, băng thông, R_app)
 seeds: [1, 2, 3, 4, 5]
 
 scenarios:
-  # --- 3 mức tải phía nhận ---
-  S1_nhe:                    # ứng dụng đọc nhanh -> nút cổ chai là cửa sổ (buffer/RTT)
-    app_read_rate: 1.0e7
-  S2_trung_binh:             # tốc độ đọc ~ buffer/RTT
-    app_read_rate: 6.5e5
-  S3_nang:                   # ứng dụng đọc chậm -> buffer đầy, zero window, receiver là nút cổ chai
-    app_read_rate: 1.0e5
+  # --- 4 mức tải phía nhận ---
+  S1_nhe:                    # ứng dụng đọc rất nhanh -> giới hạn bởi cửa sổ (B/RTT ≈ 642 kB/s)
+    app_read_rate: 1.0e+7
+  S2_trung_binh:             # tốc độ đọc ≈ B/RTT -> vùng chuyển tiếp
+    app_read_rate: 6.5e+5
+  S3_nang:                   # ứng dụng đọc chậm (100 kB/s) -> bên nhận là nút cổ chai
+    app_read_rate: 1.0e+5
+  S4_tam_dung:               # như S3 nhưng ứng dụng ngừng đọc 5 s -> zero window, probe, window update
+    app_read_rate: 1.0e+5
+    app_pause_at: 1.0
+    app_pause_duration: 5.0
 
-  # --- Quét tham số (mỗi tham số chạy cho cả S1 và S3 để so sánh) ---
-  sweep_buffer:
+sweeps:
+  sweep_buffer:              # dung lượng bộ đệm nhận B (byte)
     base_on: [S1_nhe, S3_nang]
     param: buffer_size
     values: [8192, 16384, 32768, 65535, 131072, 262144]
-  sweep_rtt:
+  sweep_rtt:                 # RTT lan truyền (s)
     base_on: [S1_nhe, S3_nang]
     param: rtt
     values: [0.01, 0.05, 0.1, 0.2, 0.4]
-  sweep_app_rate:
+  sweep_app_rate:            # tốc độ ứng dụng đọc R_app (byte/s)
     base_on: [S1_nhe]
     param: app_read_rate
-    values: [5.0e4, 1.0e5, 2.5e5, 5.0e5, 1.0e6, 2.0e6, 5.0e6]
-  sweep_loss:
+    values: [5.0e+4, 1.0e+5, 2.5e+5, 5.0e+5, 7.5e+5, 1.0e+6, 2.0e+6, 5.0e+6]
+  sweep_loss:                # xác suất mất gói (mỗi chiều)
     base_on: [S1_nhe, S3_nang]
     param: loss_rate
     values: [0.0, 0.005, 0.01, 0.02, 0.05]
+  sweep_read_interval:       # ứng dụng đọc "theo cục": cùng tốc độ nhưng chu kỳ đọc dài hơn (s)
+    base_on: [S3_nang]
+    param: app_read_interval
+    values: [0.001, 0.01, 0.05, 0.1, 0.2, 0.5, 1.0]

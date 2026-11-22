@@ -2,13 +2,15 @@
 total_bytes: 1000000        # 1 MB dữ liệu cần truyền
 mss: 1460                   # byte
 buffer_size: 65535          # bộ đệm nhận (byte)
-rtt: 0.1                    # s
+rtt: 0.1                    # s (RTT lan truyền, không tính thời gian phát)
+bandwidth: 1.0e+7            # bit/s mỗi chiều (null = vô hạn)
 rto: 1.0                    # s (RTO cố định – hoặc thay bằng RFC 6298)
 loss_rate: 0.0              # xác suất mất mỗi gói
 loss_on_ack: true
 jitter: 0.0
-app_read_rate: 1.0e7        # byte/s ứng dụng nhận đọc
-app_read_interval: 0.01     # s, chu kỳ ứng dụng đọc
+app_read_rate: 1.0e+7        # byte/s ứng dụng nhận đọc
+app_read_interval: 0.001    # s, chu kỳ ứng dụng đọc (1 ms ≈ đọc ngay khi có dữ liệu)
 store_out_of_order: true
+rx_sws_avoid: true         # báo rwnd = 0 khi chỗ trống < 1 MSS (RFC 1122)
 max_wnd: null               # null = chỉ giới hạn bởi rwnd
 max_sim_time: 3600.0

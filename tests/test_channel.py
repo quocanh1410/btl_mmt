@@ -19,7 +19,6 @@ class _Sink:
         self.got.append(a)
 
 
-@pytest.mark.todo
 def test_delay_is_half_rtt():
     sim, sink = Simulator(), _Sink()
     ch = Channel(sim, rtt=0.2, loss_rate=0.0, rng=random.Random(1))
@@ -29,7 +28,6 @@ def test_delay_is_half_rtt():
     assert len(sink.got) == 1 and sim.now == pytest.approx(0.1)
 
 
-@pytest.mark.todo
 def test_loss_rate_approx():
     sim, sink = Simulator(), _Sink()
     ch = Channel(sim, rtt=0.1, loss_rate=0.2, rng=random.Random(42))
@@ -40,7 +38,6 @@ def test_loss_rate_approx():
     assert 0.77 < len(sink.got) / 10000 < 0.83
 
 
-@pytest.mark.todo
 def test_same_seed_reproducible():
     def once():
         sim, sink = Simulator(), _Sink()

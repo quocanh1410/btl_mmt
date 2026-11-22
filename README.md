@@ -28,34 +28,75 @@ sequence/ACK tích lũy, bộ đệm nhận, **advertised window (rwnd)**, hành
 │   ├── metrics.py      # ghi log & tính chỉ tiêu (P2)
 │   └── simulation.py   # ghép các khối, chạy 1 lần mô phỏng (P1)
 ├── configs/            # kịch bản YAML (P3)
-├── scripts/            # chạy hàng loạt, vẽ biểu đồ (P3)
+├── scripts/            # run_all.py (chạy tất cả), run_once.py, run_experiments.py, plot_results.py (P3)
 ├── tests/              # kiểm thử pytest (mỗi người viết test cho module của mình)
-├── results/raw/        # CSV/JSON kết quả thô (sinh tự động, có commit bản cuối)
+├── results/            # summary.csv (mean/std), raw/*.csv mỗi lần chạy, chuỗi thời gian (sinh tự động)
 ├── plots/              # biểu đồ PNG/PDF (sinh tự động)
 ├── report/             # báo cáo (P4 viết)
-├── demo/               # video, pcap, ảnh chụp minh chứng (P3)
-└── docs/               # phân công, giao diện module, quy trình git, nhật ký, ghi chú kỹ thuật (ghi_chu/)
+├── demo/               # demo TCP thật 2 máy + Wireshark, pcap, ảnh chụp (P3)
+└── docs/               # MO_TA_KY_THUAT.md, phân công, giao diện module, quy trình git, nhật ký
 ```
 
-## Cài đặt
+## Chạy nhanh (3 lệnh)
+
+Yêu cầu: **Python ≥ 3.10** (Windows / macOS / Linux).
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+git clone https://github.com/quocanh1410/btl_mmt.git && cd btl_mmt
 pip install -r requirements.txt
-pip install -e .                 # cài package tcpfc ở chế độ dev
+python scripts/run_all.py
 ```
 
-Yêu cầu: Python ≥ 3.10. Ghi phiên bản thực tế dùng khi chạy thí nghiệm vào `results/ENVIRONMENT.md`.
+`run_all.py` lần lượt: chạy 26 kiểm thử → chạy toàn bộ thí nghiệm (51 cấu hình × 5 seed, khoảng 10 giây)
+→ vẽ 8 biểu đồ vào `plots/` → ghi `results/ENVIRONMENT.md`. Kết quả tổng hợp: `results/summary.csv`.
 
-## Chạy
+> Nếu máy có nhiều bản Python, dùng `python3` thay cho `python`. Muốn môi trường riêng:
+> `python -m venv .venv` rồi `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`) trước khi `pip install`.
+
+### Chạy 1 lần, thử tham số tùy ý
 
 ```bash
-pytest                                           # kiểm thử
-python scripts/run_once.py configs/base.yaml     # chạy 1 lần, in chỉ tiêu
-python scripts/run_experiments.py                # chạy tất cả kịch bản × 5 seed -> results/raw/
-python scripts/plot_results.py                   # vẽ biểu đồ -> plots/
+python scripts/run_once.py                                    # cấu hình mặc định configs/base.yaml
+python scripts/run_once.py --scenario S4_tam_dung --plot      # kịch bản S4, vẽ plots/run_once.png
+python scripts/run_once.py --set app_read_rate=2e5 rtt=0.05 loss_rate=0.01 --seed 3
 ```
+
+Các tham số (byte, giây, byte/giây) nằm trong `configs/base.yaml`; kịch bản và tham số quét trong
+`configs/scenarios.yaml`.
+
+### Từng bước riêng lẻ
+
+```bash
+python -m pytest -q                      # kiểm thử
+python scripts/run_experiments.py        # thí nghiệm -> results/summary.csv, results/raw/*.csv
+python scripts/plot_results.py           # biểu đồ -> plots/
+```
+
+### Demo TCP thật trên 2 máy + Wireshark
+
+Xem [demo/README.md](demo/README.md).
+
+## Kết quả chính
+
+| Kịch bản | Tốc độ đọc ứng dụng | Goodput | Giới hạn lý thuyết | Bộ đệm nhận bị chiếm |
+|---|---|---|---|---|
+| S1 đọc nhanh | 10 MB/s | 618 kB/s | 642 kB/s (B/RTT) | 0,5 % |
+| S2 trung bình | 650 kB/s | 475 kB/s | 642 kB/s | 11 % |
+| S3 đọc chậm | 100 kB/s | 99,5 kB/s | 100 kB/s (**bên nhận**) | 77 % |
+| S4 tạm dừng đọc 5 s | 100 kB/s | 66 kB/s | – | 84 %, rwnd = 0 trong 4,9 s, 2 probe |
+
+Mô tả mô hình, giả định, công thức chỉ tiêu và nhận xét chi tiết: [docs/MO_TA_KY_THUAT.md](docs/MO_TA_KY_THUAT.md).
+
+| Biểu đồ | Nội dung |
+|---|---|
+| `fig06` | Goodput theo dung lượng bộ đệm nhận |
+| `fig07` | Goodput theo RTT |
+| `fig08` | Goodput và mức chiếm bộ đệm theo tốc độ đọc của ứng dụng |
+| `fig09` | Goodput và số lần timeout theo tỷ lệ mất gói |
+| `fig10` | Ứng dụng đọc theo cục: goodput và thời gian zero window |
+| `fig11` | So sánh 4 kịch bản |
+| `fig12` | Diễn biến in-flight / rwnd / bộ đệm theo thời gian – S3 |
+| `fig13` | Zero window, probe, window update khi ứng dụng tạm dừng – S4 |
 
 ## Quy trình làm việc
 
