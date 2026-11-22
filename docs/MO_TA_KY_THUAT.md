@@ -49,11 +49,9 @@ Engine (hàng đợi sự kiện) điều khiển thời gian; Metrics ghi chu�
 - Chỗ trống = B − (byte trong bộ đệm, gồm cả segment sai thứ tự). Segment chỉ được nhận nếu nằm trọn trong
   chỗ trống; segment trùng, probe hay segment bị bỏ vẫn được trả ACK.
 - **rwnd quảng bá = chỗ trống, nhưng = 0 nếu chỗ trống < min(MSS, B/2)** – tránh Silly Window Syndrome phía
-  nhận (RFC 1122 §4.2.3.3; Linux làm tương tự). *Lưu đồ Hình 3 ghi "rwnd = B − dữ liệu trong đệm"; cần bổ sung
-  chú thích quy tắc làm tròn này.*
+  nhận (RFC 1122 §4.2.3.3; Linux làm tương tự).
 - **Window update** sau khi ứng dụng đọc: gửi ACK chủ động nếu cửa sổ mới ≥ 2 × phần cửa sổ đã báo còn lại
   (quy tắc của Linux `tcp_cleanup_rbuf`). Trường hợp quan trọng nhất: đã báo 0, nay ≥ 1 MSS → gửi ngay.
-  *Lưu đồ Hình 4 ghi "rwnd tăng từ < 1 MSS lên ≥ 1 MSS" – đó là trường hợp đặc biệt của quy tắc này.*
 
 ## 4. Chỉ tiêu đo (`metrics.py`)
 
