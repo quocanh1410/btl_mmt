@@ -59,6 +59,7 @@ python scripts/run_all.py
 python scripts/run_once.py                                    # cấu hình mặc định configs/base.yaml
 python scripts/run_once.py --scenario S4_tam_dung --plot      # kịch bản S4, vẽ plots/run_once.png
 python scripts/run_once.py --set app_read_rate=2e5 rtt=0.05 loss_rate=0.01 --seed 3
+python scripts/trace.py --pause                               # in từng bước bằng lời (để hiểu code chạy thế nào)
 ```
 
 Các tham số (byte, giây, byte/giây) nằm trong `configs/base.yaml`; kịch bản và tham số quét trong
